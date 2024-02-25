@@ -5,16 +5,13 @@ class PhoneDirectoryGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("Phone Directory")
-        self.master.geometry("400x200")  # Change width and height as needed
+        self.master.geometry("400x200") 
         self.master.config(bg="#f0f0f0")
 
-        # Define font style and size
-        self.custom_font = ('Helvetica', 10, 'bold')  # Change the font family, size, and style as needed
-
+        self.custom_font = ('Helvetica', 10, 'bold')  
         self.create_widgets()
 
     def create_widgets(self):
-        # Use custom font for labels, entries, and buttons
         self.label_name = tk.Label(self.master, text="Name:", bg="#f0f0f0", font=self.custom_font)
         self.label_name.grid(row=0, column=0, padx=5, pady=5, sticky="e")
         self.entry_name = tk.Entry(self.master, font=self.custom_font)
