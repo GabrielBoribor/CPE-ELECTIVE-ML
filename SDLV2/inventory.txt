@@ -1,0 +1,5 @@
+1. Motherboard: 225
+2. Hard Disk: 21
+3. Diskette: 212
+4. Compact Disk: 231
+5. Memory Cards: 155
