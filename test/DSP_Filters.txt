@@ -1,22 +1,21 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL import Image
 import os
 
-# Load the image
+
 image_path = r'C:\Users\Borvs\Desktop\test\apple.jfif'
 if not os.path.exists(image_path):
     raise FileNotFoundError(f"The file '{image_path}' does not exist.")
 
-# Open the image using PIL and convert to numpy array
-image = Image.open(image_path)
-image_np = np.array(image)
+# Load with OpenCV (BGR format)convert iRGB 
+image_np = cv2.imread(image_path)
+image_rgb = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
 
 # Convert the image to grayscale (for edge detection)
 gray_image = cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY)
 
-# Define convolution kernels(constant values yan) 
+# Define convolution kernels
 edge_detection_kernel = np.array([[-1, -1, -1],
                                   [-1, 8, -1],
                                   [-1, -1, -1]])
@@ -33,19 +32,19 @@ laplacian_kernel = np.array([[0, 1, 0],
 
 # Apply 2D convolution for each filter
 edge_detected_image = cv2.filter2D(gray_image, -1, edge_detection_kernel)
-blurred_image = cv2.filter2D(image_np, -1, blurring_kernel)
-sharpened_image = cv2.filter2D(image_np, -1, sharpening_kernel)
+blurred_image = cv2.filter2D(image_rgb, -1, blurring_kernel)
+sharpened_image = cv2.filter2D(image_rgb, -1, sharpening_kernel)
 laplacian_image = cv2.filter2D(gray_image, -1, laplacian_kernel)
 
 # Gaussian Blurring
-gaussian_blurred_image = cv2.GaussianBlur(image_np, (7, 7), 0)
+gaussian_blurred_image = cv2.GaussianBlur(image_rgb, (7, 7), 0)
 
 # Plotting the images
 plt.figure(figsize=(18, 12))
 
 # Original Image
 plt.subplot(2, 3, 1)
-plt.imshow(image_np)
+plt.imshow(image_rgb)
 plt.title('Original Image')
 plt.axis('off')
 
@@ -57,13 +56,13 @@ plt.axis('off')
 
 # Blurred Image
 plt.subplot(2, 3, 3)
-plt.imshow(cv2.cvtColor(blurred_image, cv2.COLOR_BGR2RGB))
+plt.imshow(blurred_image)
 plt.title('Averaging Blur')
 plt.axis('off')
 
 # Sharpened Image
 plt.subplot(2, 3, 4)
-plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_BGR2RGB))
+plt.imshow(sharpened_image)
 plt.title('Sharpened Image')
 plt.axis('off')
 
@@ -75,7 +74,7 @@ plt.axis('off')
 
 # Gaussian Blurred Image
 plt.subplot(2, 3, 6)
-plt.imshow(cv2.cvtColor(gaussian_blurred_image, cv2.COLOR_BGR2RGB))
+plt.imshow(gaussian_blurred_image)
 plt.title('Gaussian Blurred')
 plt.axis('off')
 
